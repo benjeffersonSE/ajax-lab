@@ -51,16 +51,22 @@
       //let api = "//got-quotes.herokuapp.com/quotes";
       var api = "https://api.coronavirus.data.gov.uk/v1/data?filters=areaType=nation;areaName=england&structure={%22date%22:%22date%22,%22newCases%22:%22newCasesByPublishDate%22}"
 
-      fetch(api)
-        .then(function (response) {
-          return response.json();
+      let api = "data/myData.json";
+        fetch(api)
+        .then(response => response.json())
+        .then(myJson => {
+        console.dir(myJson);
+        document.getElementById("myData").innerHTML = myJson.map(obj => {
+        let myStr = `<tr>
+        <td>${obj.name}</td>
+        <td>${obj.email}</td>
+        <td>${obj.age}</td>
+        </tr>`
+        return myStr
+        }).join("")
+        // use join with template literals to remove extra comma
         })
-        .then(function (myJson) {
-          console.dir(myJson);
-        })
-        .catch(function () {
-          console.log("damn that Jason");
-        });
+        .catch(() => console.log("damn that Jason"))
     })();
   </script>
 </html>
