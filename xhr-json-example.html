@@ -38,5 +38,39 @@
         <tbody></tbody>
       </table>
     </div>
+    <script>
+      (function() {
+        var api = "data/myData.json";
+        var myXHR = new XMLHttpRequest();
+        myXHR.open("GET", api, true);
+        myXHR.addEventListener("readystatechange", showData);
+        myXHR.send();
+        var staffList = [];
+        var staffStr = ""
+        var tableBody = document.querySelector("tbody");
+        function showData() {
+        if (myXHR.readyState == 4) {
+          console.dir(myXHR.responseText);
+        // data from server is a string make into an object
+        // parse to make an object
+        staffList = JSON.parse(myXHR.responseText);
+        console.dir(staffList);
+        staffList.forEach(function(staffMember){
+        staffStr +=
+        `<tr>
+        <td>${staffMember.name}</td>
+        <td>${staffMember.email}</td>
+        <td>${staffMember.age}</td>
+        </tr>`
+        })
+        tableBody.innerHTML = staffStr
+        // JSON.stringify does the opposite
+        // Javascript object is turned into a string
+        var myStr = JSON.stringify(myJson);
+        console.dir(myStr);
+        }
+        }
+        })();
+    </script>
   </body>
 </html>
